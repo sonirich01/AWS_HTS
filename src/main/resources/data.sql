@@ -1,0 +1,1 @@
+insert into User (first_name,last_name,user_name,pass_word,email_id,phone_number,role)values ('sachin','tendulkar','soni8','pass','soni@hsbc','344324324','user')
