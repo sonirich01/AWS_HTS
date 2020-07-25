@@ -1,1 +1,29 @@
 sudo chown $USER:$USER -R /home/gaurav/git/repository2/
+
+
+137  heroku keys
+  138  ssh-keygen -t rsa
+  139  heroku keys:add
+  140  ssh -v git@heroku.com
+  141  heroku create
+  142  git remote -v
+  143  git init
+  144  git add .
+  145  git commit =m "my first deployment"
+  146  git commit -m "my first deployment"
+  147  heroku create
+  148  git remote -v
+  149  git push heroku master
+  150  heroku login
+  151  echo $PATH
+  152  export PATH="$PATH:/snap/bin"
+  153  heroku login
+  154  heroku login -i
+  155  git push heroku master
+  156  heroku create
+  157  git remote -v
+  158  git push heroku master
+  159  history
+gaurav@gaurav-SVE1513S1EW:~/git/repository2/DigitalTransportSystem$ 
+if(userRepository.findAll().contains(userName) && userRepository.findAll().contains(passWord)){
+    	return true;
