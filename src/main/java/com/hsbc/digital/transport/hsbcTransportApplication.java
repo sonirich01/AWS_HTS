@@ -6,10 +6,10 @@ import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
 @ComponentScan(basePackages= {"com.hsbc.digital"})
-public class DemoApplication {
+public class hsbcTransportApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(DemoApplication.class, args);
+		SpringApplication.run(hsbcTransportApplication.class, args);
 	}
 
 }
