@@ -23,7 +23,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.hsbc.digital.transport.errorhandler.DefaultExceptionHandler;
 import com.hsbc.digital.transport.errorhandler.RecordNotFoundException;
 import com.hsbc.digital.transport.model.User;
+import com.hsbc.digital.transport.model.UserDetailedInfo;
+import com.hsbc.digital.transport.model.UserFullInfo;
 import com.hsbc.digital.transport.repository.RoleRepository;
+import com.hsbc.digital.transport.repository.UserDetailsRepository;
 import com.hsbc.digital.transport.repository.UserRepository;
 
 @RestController
@@ -33,10 +36,14 @@ public class UserAccountController {
 	@Autowired
 	UserRepository userRepository;
 	
+
+	@Autowired
+	UserDetailsRepository userDetailsRepository;
+	
 	@Autowired
 	DefaultExceptionHandler defaultExceptionHandler;
 
-	@RequestMapping(path = "/employeeRegister/{role}", method = RequestMethod.POST, consumes = {
+	@RequestMapping(path = "/employeeSignUp/{role}", method = RequestMethod.POST, consumes = {
 			MediaType.APPLICATION_JSON_VALUE }, produces = "application/json")
 	public User addUser(@Valid @RequestBody User user, @PathVariable("role") String role) {
      
@@ -45,7 +52,7 @@ public class UserAccountController {
 
 	}
 
-	@RequestMapping(path = "/employees", method = RequestMethod.GET, produces = "application/json")
+	@RequestMapping(path = "/retrieveEmployees", method = RequestMethod.GET, produces = "application/json")
 	public List<User> findUser() {
 
 		return userRepository.findAll();
@@ -53,7 +60,7 @@ public class UserAccountController {
 	}
 
 	
-	@RequestMapping(path = "/loginUser", method = RequestMethod.GET, produces = "application/json")
+	@RequestMapping(path = "/employeeLogin", method = RequestMethod.GET, produces = "application/json")
 	@ResponseStatus
 	
 	public ResponseEntity<User> loginUser(@RequestParam String userName, @RequestParam String passWord) {
@@ -66,12 +73,41 @@ public class UserAccountController {
         }
 	}
 	
-	@RequestMapping(value = "/logoutEmployee", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/employeeLogout", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public String logout() {
 
 		return "logged out successfully";
 
 	}
+	
+	@RequestMapping(path = "/employeeRegister/{psid}", method = RequestMethod.POST, consumes = {
+			MediaType.APPLICATION_JSON_VALUE }, produces = "application/json")
+	public UserDetailedInfo registerEmployee(@Valid @RequestBody UserDetailedInfo userDetailedInfo,@PathVariable("psid") String psid) {
+     
+		 if((userRepository.getUserByUserName(psid).equals(null))) {
+			 throw new RecordNotFoundException("invalid username"); 
+		 }
+		 userDetailedInfo.setPsid(psid);
+		 return userDetailsRepository.save(userDetailedInfo);
+	}
 
+	
+	@RequestMapping(path = "/employeeSignUpInfo", method = RequestMethod.GET, produces = "application/json")
+	public ResponseEntity<User> retrieveEmployeeSignUpInfoUsingPSID(@RequestParam String userName) {
 
+		return new ResponseEntity<User>(userRepository.getUserByUserName(userName),HttpStatus.OK);
+
+	}
+
+	
+	
+ @SuppressWarnings({ "unchecked", "rawtypes" })
+@RequestMapping(path = "/RegisteredEmployeeInfo/{peopleSoftId}", method =RequestMethod.GET, consumes = { MediaType.APPLICATION_JSON_VALUE }, produces= "application/json") 
+ public ResponseEntity retrieveEmployeeFullInfoUsingPSID( @PathVariable("peopleSoftId") String peopleSoftId, UserDetailedInfo userDetailedInfo) {
+	  
+	  User user = userRepository.getUserByUserName( peopleSoftId );
+	  UserDetailedInfo userDetails=userDetailsRepository.getUserByPSID(peopleSoftId);
+	  return new ResponseEntity( new UserFullInfo(user, userDetails),HttpStatus.OK);
+	 	
+	}
 }
