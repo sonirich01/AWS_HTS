@@ -22,9 +22,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.hsbc.digital.transport.errorhandler.DefaultExceptionHandler;
 import com.hsbc.digital.transport.errorhandler.RecordNotFoundException;
+import com.hsbc.digital.transport.model.Building;
+import com.hsbc.digital.transport.model.Location;
+import com.hsbc.digital.transport.model.LocationFullInfo;
 import com.hsbc.digital.transport.model.User;
 import com.hsbc.digital.transport.model.UserDetailedInfo;
 import com.hsbc.digital.transport.model.UserFullInfo;
+import com.hsbc.digital.transport.repository.BuildingRepository;
+import com.hsbc.digital.transport.repository.LocationRepository;
 import com.hsbc.digital.transport.repository.RoleRepository;
 import com.hsbc.digital.transport.repository.UserDetailsRepository;
 import com.hsbc.digital.transport.repository.UserRepository;
@@ -36,6 +41,11 @@ public class UserAccountController {
 	@Autowired
 	UserRepository userRepository;
 	
+	@Autowired
+	LocationRepository locationRepository;
+
+	@Autowired
+	BuildingRepository buildingRepository;
 
 	@Autowired
 	UserDetailsRepository userDetailsRepository;
@@ -109,5 +119,29 @@ public class UserAccountController {
 	  UserDetailedInfo userDetails=userDetailsRepository.getUserByPSID(peopleSoftId);
 	  return new ResponseEntity( new UserFullInfo(user, userDetails),HttpStatus.OK);
 	 	
+	}
+ @SuppressWarnings({ "unchecked", "rawtypes" })
+ @RequestMapping(path = "/locations/{locationName}", method =RequestMethod.GET, consumes = { MediaType.APPLICATION_JSON_VALUE }, produces= "application/json") 
+  public ResponseEntity retrieveLocationsFullInfoUsingLocationName( @PathVariable("locationName") String locationName) {
+ 	  Location location=locationRepository.getDetailsByLocationName(locationName);
+ 	  Building building=buildingRepository.getBuildingByLocationName(locationName);
+ 	  return new ResponseEntity( new LocationFullInfo(location, building),HttpStatus.OK);
+ 	 	
+ 	}
+ 
+	@RequestMapping(path = "/addLocations", method = RequestMethod.POST, consumes = {
+			MediaType.APPLICATION_JSON_VALUE }, produces = "application/json")
+	public Location postLocation(@Valid @RequestBody Location location) {
+		
+		return locationRepository.save(location);
+     
+	}
+	
+	@RequestMapping(path = "/addBuildings", method = RequestMethod.POST, consumes = {
+			MediaType.APPLICATION_JSON_VALUE }, produces = "application/json")
+	public Building postBuilding(@Valid @RequestBody Building building) {
+		
+		return buildingRepository.save(building);
+     
 	}
 }
