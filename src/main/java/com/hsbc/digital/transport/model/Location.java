@@ -35,7 +35,7 @@ import io.swagger.annotations.ApiModelProperty;
 
 
 		@ApiModelProperty(example="locationName",required =true,position=1)
-		@Column(length=10)
+		@Column(length=10,unique=true)
 		private String locationName;
 	
 
