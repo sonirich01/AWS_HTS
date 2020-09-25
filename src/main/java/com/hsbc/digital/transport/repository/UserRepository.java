@@ -2,9 +2,10 @@ package com.hsbc.digital.transport.repository;
 
 
 
-import java.util.List;
+import javax.transaction.Transactional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -23,9 +24,14 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 	 @Query("select u from User u where u.userName = :userName and u.passWord = :passWord")
 	  User findByUserNameOrPassWord(@Param("userName") String userName,
 	                                 @Param("passWord") String passWord);
-	  }
-
-
+	  
+	
+    @Transactional
+	@Modifying
+	@Query(value="delete u from User u where u.user_name = ?1",nativeQuery=true)
+	void deleteUserByPSID(String userName) ;
+	
+   }
 	/*
 	 * Get user list by user name. Please note the format should be
 	 * findBy<column_name>.
