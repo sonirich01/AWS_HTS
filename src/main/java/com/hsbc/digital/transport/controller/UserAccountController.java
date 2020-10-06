@@ -130,6 +130,7 @@ public class UserAccountController {
 	 }
 	 
 	//////////////////////////////////////////////////////////////////////////////////////
+	 //location related//
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@RequestMapping(path = "/locations/{locationName}", method = RequestMethod.GET, consumes = {
