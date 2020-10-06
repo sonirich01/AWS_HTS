@@ -120,6 +120,16 @@ public class UserAccountController {
 	 	 userRepository.deleteUserByPSID(peopleSoftId);
 	 	 	
 	 }
+	 
+	 @RequestMapping(path = "/employeeUpdate/{peopleSoftId}", method =RequestMethod.PUT, consumes = { MediaType.APPLICATION_JSON_VALUE }, produces= "application/json") 
+	  public void updateEmployeeSignUpInfoUsingPSID(@Valid @RequestBody UserFullInfo userFullInfo,@PathVariable("peopleSoftId") String peopleSoftId) {	 	
+	 	User user=userFullInfo.getUser();
+	 	UserDetailedInfo userDetailedInfo=userFullInfo.getUserDetailedInfo();
+		userRepository.UpdateUserInfoByPSID(user.getPassword(), user.getPhoneNumber(), peopleSoftId);
+		userDetailsRepository.UpdateUserDetailsByPSID(userDetailedInfo.getAddress(), userDetailedInfo.getDepartment(), userDetailedInfo.getDesignation(), userDetailedInfo.getEmergencyContactNumber(), userDetailedInfo.getExtensionNumber(), userDetailedInfo.getLineManager(), userDetailedInfo.getPsid());
+	 }
+	 
+	//////////////////////////////////////////////////////////////////////////////////////
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@RequestMapping(path = "/locations/{locationName}", method = RequestMethod.GET, consumes = {

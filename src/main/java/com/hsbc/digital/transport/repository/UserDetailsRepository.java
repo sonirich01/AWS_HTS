@@ -21,6 +21,13 @@ public interface UserDetailsRepository extends JpaRepository<UserDetailedInfo, I
 	 @Modifying
 	 @Query(value="delete u from user_details u where u.psid = ?1",nativeQuery=true)
 	 void deleteUserByPSID(String psid);
+	 
+	 
+	 @Transactional
+	 @Modifying
+	 @Query(value="update UserDetailedInfo set address=?1,department=?2,designation=?3,emergency_contact_number=?4,extension_number=?5,line_manager=?6 where psid = ?7")
+	 void UpdateUserDetailsByPSID(String address,String department,String designation,String emergency_contact_number,String extension_number,String line_manager, String psid);
+	 
 
 	/*
 	 * Get user list by user name. Please note the format should be

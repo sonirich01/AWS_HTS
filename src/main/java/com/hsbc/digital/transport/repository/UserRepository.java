@@ -30,6 +30,11 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 	@Modifying
 	@Query(value="delete u from User u where u.user_name = ?1",nativeQuery=true)
 	void deleteUserByPSID(String userName) ;
+    
+    @Transactional
+	 @Modifying
+	 @Query(value="update User u set u.passWord=?1,u.phoneNumber=?2 where u.userName = ?3")
+	 int UpdateUserInfoByPSID(String passWord,String phoneNumber,String user_name);
 	
    }
 	/*
