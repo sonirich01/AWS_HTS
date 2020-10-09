@@ -157,5 +157,19 @@ public class UserAccountController {
 		return new ResponseEntity<Location>(locationRepository.save(location), HttpStatus.OK);
 
 	}
+	
+	@RequestMapping(path = "/updateLocation/{locationName}", method = RequestMethod.PUT, consumes = {
+			MediaType.APPLICATION_JSON_VALUE }, produces = "application/json")
+	public void updateLocation(@Valid @RequestBody Location location,@PathVariable("locationName") String locationName) throws JsonProcessingException {
+		locationRepository.UpdateUserInfoByPSID(location.getCost(), location.getComments(), location.getBuilding1(), location.getBuilding2(), location.getBuilding3(), location.getBuilding4(), locationName);
+		
+
+	}
+	@RequestMapping(path = "/deleteLocation/{locationName}", method =RequestMethod.DELETE, consumes = { MediaType.APPLICATION_JSON_VALUE }, produces= "application/json") 
+	  public void DeleteLocationUsingLocation(@PathVariable("locationName") String locationName) {
+	 	  
+		locationRepository.deleteUserBylocationName(locationName);
+	 	 	
+	 }
 
 }
