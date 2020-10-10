@@ -145,6 +145,31 @@ public class Routes {
 	private String boardingLocation6;
 	
 	
+	@JsonIgnore
+	@JsonProperty(access=Access.WRITE_ONLY)
+	@ApiModelProperty(example="boardingLocation7")
+	@Column(length=500,table="boarding_locations")
+	private String boardingLocation7;
+	
+	@JsonIgnore
+	@JsonProperty(access=Access.WRITE_ONLY)
+	@ApiModelProperty(example="boardingLocation8")
+	@Column(length=500,table="boarding_locations")
+	private String boardingLocation8;
+	
+	@JsonIgnore
+	@JsonProperty(access=Access.WRITE_ONLY)
+	@ApiModelProperty(example="boardingLocation9")
+	@Column(length=500,table="boarding_locations")
+	private String boardingLocation9;
+	
+	@JsonIgnore
+	@JsonProperty(access=Access.WRITE_ONLY)
+	@ApiModelProperty(example="boardingLocation10")
+	@Column(length=500,table="boarding_locations")
+	private String boardingLocation10;
+	
+	
     ArrayList<String> boradingLocations;
 	
 	public ArrayList<String> getBoradingLocations() {
@@ -216,7 +241,42 @@ public class Routes {
 		this.boardingLocation6 = boardingLocation6;
 	}
 
-	
+	@JsonIgnore
+	public String getBoardingLocation7() {
+		return boardingLocation7;
+	}
+
+
+	public void setBoardingLocation7(String boardingLocation7) {
+		this.boardingLocation7 = boardingLocation7;
+	}
+
+	@JsonIgnore
+	public String getBoardingLocation8() {
+		return boardingLocation8;
+	}
+
+
+	public void setBoardingLocation8(String boardingLocation8) {
+		this.boardingLocation8 = boardingLocation8;
+	}
+
+	@JsonIgnore
+	public String getBoardingLocation9() {
+		return boardingLocation9;
+	}
+
+
+	public void setBoardingLocation9(String boardingLocation9) {
+		this.boardingLocation9 = boardingLocation9;
+	}
+
+	@JsonIgnore
+	public String getBoardingLocation10() {
+		return boardingLocation10;
+	}
+
+
 	
 	///////////////////////////////////////////////////////////
 	@JsonIgnore
@@ -242,6 +302,45 @@ public class Routes {
 	@ApiModelProperty(example="dropLocation4")
 	@Column(length=10,table="drop_locations")
 	private String dropLocation4;
+	
+	@JsonIgnore
+	@JsonProperty(access=Access.WRITE_ONLY)
+	@ApiModelProperty(example="dropLocation5")
+	@Column(length=10,table="drop_locations")
+	private String dropLocation5;
+	
+	
+
+	@JsonIgnore
+	@JsonProperty(access=Access.WRITE_ONLY)
+	@ApiModelProperty(example="dropLocation6")
+	@Column(length=10,table="drop_locations")
+	private String dropLocation6;
+	
+	@JsonIgnore
+	@JsonProperty(access=Access.WRITE_ONLY)
+	@ApiModelProperty(example="dropLocation7")
+	@Column(length=10,table="drop_locations")
+	private String dropLocation7;
+	
+	@JsonIgnore
+	@JsonProperty(access=Access.WRITE_ONLY)
+	@ApiModelProperty(example="dropLocation8")
+	@Column(length=10,table="drop_locations")
+	private String dropLocation8;
+	
+	@JsonIgnore
+	@JsonProperty(access=Access.WRITE_ONLY)
+	@ApiModelProperty(example="dropLocation9")
+	@Column(length=10,table="drop_locations")
+	private String dropLocation9;
+	
+	@JsonIgnore
+	@JsonProperty(access=Access.WRITE_ONLY)
+	@ApiModelProperty(example="dropLocation10")
+	@Column(length=10,table="drop_locations")
+	private String dropLocation10;
+	
 	
 	
     ArrayList<String> dropLocations;
@@ -296,6 +395,78 @@ public class Routes {
 	public void setDropLocation4(String dropLocation4) {
 		this.dropLocation4 = dropLocation4;
 	}
+
+
+	@JsonIgnore
+	public String getDropLocation5() {
+		return dropLocation5;
+	}
+
+
+	public void setDropLocation5(String dropLocation5) {
+		this.dropLocation5 = dropLocation5;
+	}
+
+
+	@JsonIgnore
+	public String getDropLocation6() {
+		return dropLocation6;
+	}
+
+
+	public void setDropLocation6(String dropLocation6) {
+		this.dropLocation6 = dropLocation6;
+	}
+
+
+	@JsonIgnore
+	public String getDropLocation7() {
+		return dropLocation7;
+	}
+
+
+	public void setDropLocation7(String dropLocation7) {
+		this.dropLocation7 = dropLocation7;
+	}
+
+
+	@JsonIgnore
+	public String getDropLocation8() {
+		return dropLocation8;
+	}
+
+
+	public void setDropLocation8(String dropLocation8) {
+		this.dropLocation8 = dropLocation8;
+	}
+
+
+	@JsonIgnore
+	public String getDropLocation9() {
+		return dropLocation9;
+	}
+
+
+	public void setDropLocation9(String dropLocation9) {
+		this.dropLocation9 = dropLocation9;
+	}
+
+
+	@JsonIgnore
+	public String getDropLocation10() {
+		return dropLocation10;
+	}
+
+
+	public void setDropLocation10(String dropLocation10) {
+		this.dropLocation10 = dropLocation10;
+	}
+
+
+	public void setBoardingLocation10(String boardingLocation10) {
+		this.boardingLocation10 = boardingLocation10;
+	}
+
 
 	
 	

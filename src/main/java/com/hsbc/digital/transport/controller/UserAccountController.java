@@ -189,7 +189,15 @@ public class UserAccountController {
 			drop_locations.add(routes.getDropLocation2());
 			drop_locations.add(routes.getDropLocation3());
 			drop_locations.add(routes.getDropLocation4());
+			drop_locations.add(routes.getDropLocation5());
+			drop_locations.add(routes.getDropLocation6());
+			drop_locations.add(routes.getDropLocation7());
+			drop_locations.add(routes.getDropLocation8());
+			drop_locations.add(routes.getDropLocation9());
+			drop_locations.add(routes.getDropLocation10());
+					
 			routes.setDropLocations(drop_locations);
+			
 			ArrayList<String>boarding_locations=new ArrayList<String>();
 			boarding_locations.add(routes.getBoardingLocation1());
 			boarding_locations.add(routes.getBoardingLocation2());
@@ -197,6 +205,10 @@ public class UserAccountController {
 			boarding_locations.add(routes.getBoardingLocation4());
 			boarding_locations.add(routes.getBoardingLocation5());
 			boarding_locations.add(routes.getBoardingLocation6());
+			boarding_locations.add(routes.getBoardingLocation7());
+			boarding_locations.add(routes.getBoardingLocation8());
+			boarding_locations.add(routes.getBoardingLocation9());
+			boarding_locations.add(routes.getBoardingLocation10());
 			routes.setBoradingLocations(boarding_locations);
 			return new ResponseEntity<Routes>(routesRepository.save(routes),HttpStatus.OK);
 	     
