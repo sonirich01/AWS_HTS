@@ -1,5 +1,7 @@
 package com.hsbc.digital.transport.controller;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -21,11 +23,13 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.hsbc.digital.transport.errorhandler.DefaultExceptionHandler;
 import com.hsbc.digital.transport.errorhandler.RecordNotFoundException;
 import com.hsbc.digital.transport.model.Location;
+import com.hsbc.digital.transport.model.Routes;
 import com.hsbc.digital.transport.model.User;
 import com.hsbc.digital.transport.model.UserDetailedInfo;
 import com.hsbc.digital.transport.model.UserFullInfo;
 
 import com.hsbc.digital.transport.repository.LocationRepository;
+import com.hsbc.digital.transport.repository.RoutesRepository;
 import com.hsbc.digital.transport.repository.UserDetailsRepository;
 import com.hsbc.digital.transport.repository.UserRepository;
 
@@ -41,6 +45,9 @@ public class UserAccountController {
 
 	@Autowired
 	UserDetailsRepository userDetailsRepository;
+	
+	@Autowired
+	RoutesRepository routesRepository;
 
 	@Autowired
 	DefaultExceptionHandler defaultExceptionHandler;
@@ -171,5 +178,46 @@ public class UserAccountController {
 		locationRepository.deleteUserBylocationName(locationName);
 	 	 	
 	 }
+	
+	
+	///////////////////////////////////////////////
+	 @RequestMapping(path = "/addRoutes", method = RequestMethod.POST, consumes = {
+				MediaType.APPLICATION_JSON_VALUE }, produces = "application/json")
+		public ResponseEntity<Routes> postRoutes(@Valid @RequestBody Routes routes) throws JsonProcessingException {
+		 ArrayList<String>drop_locations=new ArrayList<String>();
+			drop_locations.add(routes.getDropLocation1());
+			drop_locations.add(routes.getDropLocation2());
+			drop_locations.add(routes.getDropLocation3());
+			drop_locations.add(routes.getDropLocation4());
+			routes.setDropLocations(drop_locations);
+			ArrayList<String>boarding_locations=new ArrayList<String>();
+			boarding_locations.add(routes.getBoardingLocation1());
+			boarding_locations.add(routes.getBoardingLocation2());
+			boarding_locations.add(routes.getBoardingLocation3());
+			boarding_locations.add(routes.getBoardingLocation4());
+			boarding_locations.add(routes.getBoardingLocation5());
+			boarding_locations.add(routes.getBoardingLocation6());
+			routes.setBoradingLocations(boarding_locations);
+			return new ResponseEntity<Routes>(routesRepository.save(routes),HttpStatus.OK);
+	     
+		}
+	 
+	 @SuppressWarnings({ "rawtypes", "unchecked" })
+	@RequestMapping(path = "/routes/{locationName}", method = RequestMethod.GET, consumes = {
+				MediaType.APPLICATION_JSON_VALUE }, produces = "application/json")
+		public ResponseEntity getRoutes(@PathVariable(value = "locationName") String locationName) throws JsonProcessingException {
+			return new ResponseEntity(routesRepository.getRoutesByLocationName(locationName), HttpStatus.OK);
+		
+	     
+		}
+
+	 @SuppressWarnings({ "rawtypes", "unchecked" })
+		@RequestMapping(path = "/routes/{locationName}/{routeNumber}", method = RequestMethod.GET, consumes = {
+					MediaType.APPLICATION_JSON_VALUE }, produces = "application/json")
+			public ResponseEntity getRoutes(@PathVariable(value = "locationName") String locationName,@PathVariable(value = "routeNumber") String routeNumber) throws JsonProcessingException {
+				return new ResponseEntity(routesRepository.getDetailsByLocationNameAndRouteNumber(locationName, routeNumber), HttpStatus.OK);
+			
+		     
+			}
 
 }
