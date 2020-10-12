@@ -1,5 +1,7 @@
 package com.hsbc.digital.transport.model;
 
+import java.util.ArrayList;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,6 +10,10 @@ import javax.persistence.Id;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.SecondaryTable;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -43,25 +49,42 @@ import io.swagger.annotations.ApiModelProperty;
 		private String comments;
 		
 	
-	
+		@JsonIgnore
+		@JsonProperty(access=Access.WRITE_ONLY)
 		@ApiModelProperty(example="Building1")
 		@Column(length=10,table="building")
 		private String building1;
 	
-	
+		@JsonIgnore
+		@JsonProperty(access=Access.WRITE_ONLY)
 		@ApiModelProperty(example="Building2")
 		@Column(length=10,table="building")
 		private String building2;
 		
+		@JsonIgnore
+		@JsonProperty(access=Access.WRITE_ONLY)
 		@ApiModelProperty(example="Building3")
 		@Column(length=10,table="building")
 		private String building3;
 		
+		@JsonIgnore
+		@JsonProperty(access=Access.WRITE_ONLY)
 		@ApiModelProperty(example="Building4")
-		@Column(length=10,table="building")
+		@Column(length=10,table="")
 		private String building4;
 		
+		
 
+
+		ArrayList<String> Buildings;
+		
+		public ArrayList<String> getBuildings() {
+			return Buildings;
+		}
+
+		public void setBuildings(ArrayList<String> buildings) {
+			Buildings = buildings;
+		}
 		
 
 		public long getId() {
@@ -99,6 +122,7 @@ import io.swagger.annotations.ApiModelProperty;
 			this.comments = comments;
 		}
 		
+		@JsonIgnore
 		public String getBuilding1() {
 			return building1;
 		}
@@ -107,6 +131,7 @@ import io.swagger.annotations.ApiModelProperty;
 			this.building1 = building1;
 		}
 
+		@JsonIgnore
 		public String getBuilding2() {
 			return building2;
 		}
@@ -115,6 +140,7 @@ import io.swagger.annotations.ApiModelProperty;
 			this.building2 = building2;
 		}
 
+		@JsonIgnore
 		public String getBuilding3() {
 			return building3;
 		}
@@ -123,6 +149,7 @@ import io.swagger.annotations.ApiModelProperty;
 			this.building3 = building3;
 		}
 
+		@JsonIgnore
 		public String getBuilding4() {
 			return building4;
 		}

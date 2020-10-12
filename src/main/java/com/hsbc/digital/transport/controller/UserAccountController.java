@@ -161,6 +161,14 @@ public class UserAccountController {
 	@RequestMapping(path = "/addLocations", method = RequestMethod.POST, consumes = {
 			MediaType.APPLICATION_JSON_VALUE }, produces = "application/json")
 	public ResponseEntity<Location> postLocation(@Valid @RequestBody Location location) throws JsonProcessingException {
+		
+		 ArrayList<String>buildings=new ArrayList<String>();
+		 buildings.add(location.getBuilding1());
+		 buildings.add(location.getBuilding2());
+		 buildings.add(location.getBuilding3());
+		 buildings.add(location.getBuilding4());
+					
+		 location.setBuildings(buildings);
 		return new ResponseEntity<Location>(locationRepository.save(location), HttpStatus.OK);
 
 	}
