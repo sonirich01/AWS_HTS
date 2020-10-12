@@ -39,22 +39,30 @@ public class Routes {
 
 
 	@ApiModelProperty(example="locationName",required =true,position=1)
-	@Column(length=10)
+	@Column(length=50)
 	private String locationName;
 	
 	
 	@ApiModelProperty(example="routeNumber",required =true,position=2)
-	@Column(length=3,unique=true)
+	@Column(length=3)
 	private String routeNumber;
 	
 	
 	@ApiModelProperty(example="routeName",required =true,position=3)
-	@Column(length=30,unique=true)
+	@Column(length=30)
 	private String routeName;
 	
 	@ApiModelProperty(example="busCapacity",required =true,position=4)
 	@Column(length=5)
 	private String busCapacity;
+	
+	
+
+
+
+	@ApiModelProperty(example="cost",required =true,position=5)
+	@Column(length=10)
+	private String cost;
 	
 	public long getId() {
 		return id;
@@ -105,7 +113,14 @@ public class Routes {
 		this.busCapacity = busCapacity;
 	}
 
-	
+	public String getCost() {
+		return cost;
+	}
+
+
+	public void setCost(String cost) {
+		this.cost = cost;
+	}
 	
 //////////////////////////////////////////////////////////////////////////	
 	@JsonIgnore
