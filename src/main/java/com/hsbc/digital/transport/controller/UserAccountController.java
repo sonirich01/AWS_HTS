@@ -1,7 +1,6 @@
 package com.hsbc.digital.transport.controller;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -27,7 +26,6 @@ import com.hsbc.digital.transport.model.Routes;
 import com.hsbc.digital.transport.model.User;
 import com.hsbc.digital.transport.model.UserDetailedInfo;
 import com.hsbc.digital.transport.model.UserFullInfo;
-
 import com.hsbc.digital.transport.repository.LocationRepository;
 import com.hsbc.digital.transport.repository.RoutesRepository;
 import com.hsbc.digital.transport.repository.UserDetailsRepository;
@@ -40,12 +38,14 @@ public class UserAccountController {
 	@Autowired
 	UserRepository userRepository;
 
+	
+
 	@Autowired
 	LocationRepository locationRepository;
 
 	@Autowired
 	UserDetailsRepository userDetailsRepository;
-	
+
 	@Autowired
 	RoutesRepository routesRepository;
 
@@ -118,26 +118,31 @@ public class UserAccountController {
 		return new ResponseEntity(new UserFullInfo(user, userDetails), HttpStatus.OK);
 
 	}
-	
-	
-	 @RequestMapping(path = "/employeeDelete/{peopleSoftId}", method =RequestMethod.DELETE, consumes = { MediaType.APPLICATION_JSON_VALUE }, produces= "application/json") 
-	  public void DeleteEmployeeFullInfoUsingPSID( @PathVariable("peopleSoftId") String peopleSoftId, UserDetailedInfo userDetailedInfo) {
-	 	  
-	 	 userDetailsRepository.deleteUserByPSID(peopleSoftId);
-	 	 userRepository.deleteUserByPSID(peopleSoftId);
-	 	 	
-	 }
-	 
-	 @RequestMapping(path = "/employeeUpdate/{peopleSoftId}", method =RequestMethod.PUT, consumes = { MediaType.APPLICATION_JSON_VALUE }, produces= "application/json") 
-	  public void updateEmployeeSignUpInfoUsingPSID(@Valid @RequestBody UserFullInfo userFullInfo,@PathVariable("peopleSoftId") String peopleSoftId) {	 	
-	 	User user=userFullInfo.getUser();
-	 	UserDetailedInfo userDetailedInfo=userFullInfo.getUserDetailedInfo();
+
+	@RequestMapping(path = "/employeeDelete/{peopleSoftId}", method = RequestMethod.DELETE, consumes = {
+			MediaType.APPLICATION_JSON_VALUE }, produces = "application/json")
+	public void DeleteEmployeeFullInfoUsingPSID(@PathVariable("peopleSoftId") String peopleSoftId,
+			UserDetailedInfo userDetailedInfo) {
+
+		userDetailsRepository.deleteUserByPSID(peopleSoftId);
+		userRepository.deleteUserByPSID(peopleSoftId);
+
+	}
+
+	@RequestMapping(path = "/employeeUpdate/{peopleSoftId}", method = RequestMethod.PUT, consumes = {
+			MediaType.APPLICATION_JSON_VALUE }, produces = "application/json")
+	public void updateEmployeeSignUpInfoUsingPSID(@Valid @RequestBody UserFullInfo userFullInfo,
+			@PathVariable("peopleSoftId") String peopleSoftId) {
+		User user = userFullInfo.getUser();
+		UserDetailedInfo userDetailedInfo = userFullInfo.getUserDetailedInfo();
 		userRepository.UpdateUserInfoByPSID(user.getPassword(), user.getPhoneNumber(), peopleSoftId);
-		userDetailsRepository.UpdateUserDetailsByPSID(userDetailedInfo.getAddress(), userDetailedInfo.getDepartment(), userDetailedInfo.getDesignation(), userDetailedInfo.getEmergencyContactNumber(), userDetailedInfo.getExtensionNumber(), userDetailedInfo.getLineManager(), userDetailedInfo.getPsid());
-	 }
-	 
+		userDetailsRepository.UpdateUserDetailsByPSID(userDetailedInfo.getAddress(), userDetailedInfo.getDepartment(),
+				userDetailedInfo.getDesignation(), userDetailedInfo.getEmergencyContactNumber(),
+				userDetailedInfo.getExtensionNumber(), userDetailedInfo.getLineManager(), userDetailedInfo.getPsid());
+	}
+
 	//////////////////////////////////////////////////////////////////////////////////////
-	 //location related//
+	// location related//
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@RequestMapping(path = "/locations/{locationName}", method = RequestMethod.GET, consumes = {
@@ -161,83 +166,105 @@ public class UserAccountController {
 	@RequestMapping(path = "/addLocations", method = RequestMethod.POST, consumes = {
 			MediaType.APPLICATION_JSON_VALUE }, produces = "application/json")
 	public ResponseEntity<Location> postLocation(@Valid @RequestBody Location location) throws JsonProcessingException {
-		
-		 ArrayList<String>buildings=new ArrayList<String>();
-		 buildings.add(location.getBuilding1());
-		 buildings.add(location.getBuilding2());
-		 buildings.add(location.getBuilding3());
-		 buildings.add(location.getBuilding4());
-					
-		 location.setBuildings(buildings);
+
+		ArrayList<String> buildings = new ArrayList<String>();
+		buildings.add(location.getBuilding1());
+		buildings.add(location.getBuilding2());
+		buildings.add(location.getBuilding3());
+		buildings.add(location.getBuilding4());
+
+		location.setBuildings(buildings);
 		return new ResponseEntity<Location>(locationRepository.save(location), HttpStatus.OK);
 
 	}
-	
+
 	@RequestMapping(path = "/updateLocation/{locationName}", method = RequestMethod.PUT, consumes = {
 			MediaType.APPLICATION_JSON_VALUE }, produces = "application/json")
-	public void updateLocation(@Valid @RequestBody Location location,@PathVariable("locationName") String locationName) throws JsonProcessingException {
-		locationRepository.UpdateUserInfoByPSID(location.getCost(), location.getComments(), location.getBuilding1(), location.getBuilding2(), location.getBuilding3(), location.getBuilding4(), locationName);
-		
+	public void updateLocation(@Valid @RequestBody Location location, @PathVariable("locationName") String locationName)
+			throws JsonProcessingException {
+		locationRepository.UpdateUserInfoByPSID(location.getCost(), location.getComments(), location.getBuilding1(),
+				location.getBuilding2(), location.getBuilding3(), location.getBuilding4(), locationName);
 
 	}
-	@RequestMapping(path = "/deleteLocation/{locationName}", method =RequestMethod.DELETE, consumes = { MediaType.APPLICATION_JSON_VALUE }, produces= "application/json") 
-	  public void DeleteLocationUsingLocation(@PathVariable("locationName") String locationName) {
-	 	  
+
+	@RequestMapping(path = "/deleteLocation/{locationName}", method = RequestMethod.DELETE, consumes = {
+			MediaType.APPLICATION_JSON_VALUE }, produces = "application/json")
+	public void DeleteLocationUsingLocation(@PathVariable("locationName") String locationName) {
+
 		locationRepository.deleteUserBylocationName(locationName);
-	 	 	
-	 }
-	
-	
+
+	}
+
 	///////////////////////////////////////////////
-	 @RequestMapping(path = "/addRoutes", method = RequestMethod.POST, consumes = {
-				MediaType.APPLICATION_JSON_VALUE }, produces = "application/json")
-		public ResponseEntity<Routes> postRoutes(@Valid @RequestBody Routes routes) throws JsonProcessingException {
-		 ArrayList<String>drop_locations=new ArrayList<String>();
-			drop_locations.add(routes.getDropLocation1());
-			drop_locations.add(routes.getDropLocation2());
-			drop_locations.add(routes.getDropLocation3());
-			drop_locations.add(routes.getDropLocation4());
-			drop_locations.add(routes.getDropLocation5());
-			drop_locations.add(routes.getDropLocation6());
-			drop_locations.add(routes.getDropLocation7());
-			drop_locations.add(routes.getDropLocation8());
-			drop_locations.add(routes.getDropLocation9());
-			drop_locations.add(routes.getDropLocation10());
-					
-			routes.setDropLocations(drop_locations);
-			
-			ArrayList<String>boarding_locations=new ArrayList<String>();
-			boarding_locations.add(routes.getBoardingLocation1());
-			boarding_locations.add(routes.getBoardingLocation2());
-			boarding_locations.add(routes.getBoardingLocation3());
-			boarding_locations.add(routes.getBoardingLocation4());
-			boarding_locations.add(routes.getBoardingLocation5());
-			boarding_locations.add(routes.getBoardingLocation6());
-			boarding_locations.add(routes.getBoardingLocation7());
-			boarding_locations.add(routes.getBoardingLocation8());
-			boarding_locations.add(routes.getBoardingLocation9());
-			boarding_locations.add(routes.getBoardingLocation10());
-			routes.setBoradingLocations(boarding_locations);
-			return new ResponseEntity<Routes>(routesRepository.save(routes),HttpStatus.OK);
-	     
-		}
-	 
-	 @SuppressWarnings({ "rawtypes", "unchecked" })
-	@RequestMapping(path = "/routes/{locationName}", method = RequestMethod.GET, consumes = {
-				MediaType.APPLICATION_JSON_VALUE }, produces = "application/json")
-		public ResponseEntity getRoutes(@PathVariable(value = "locationName") String locationName) throws JsonProcessingException {
-			return new ResponseEntity(routesRepository.getRoutesByLocationName(locationName), HttpStatus.OK);
+	@RequestMapping(path = "/addRoutes", method = RequestMethod.POST, consumes = {
+			MediaType.APPLICATION_JSON_VALUE }, produces = "application/json")
+	public ResponseEntity<Routes> postRoutes(@Valid @RequestBody Routes routes) throws JsonProcessingException {
+		ArrayList<String> drop_locations = new ArrayList<String>();
+		drop_locations.add(routes.getDropLocation1());
+		drop_locations.add(routes.getDropLocation2());
+		drop_locations.add(routes.getDropLocation3());
+		drop_locations.add(routes.getDropLocation4());
+		drop_locations.add(routes.getDropLocation5());
+		drop_locations.add(routes.getDropLocation6());
+		drop_locations.add(routes.getDropLocation7());
+		drop_locations.add(routes.getDropLocation8());
+		drop_locations.add(routes.getDropLocation9());
+		drop_locations.add(routes.getDropLocation10());
+
+		routes.setDropLocations(drop_locations);
+
+		ArrayList<String> boarding_locations = new ArrayList<String>();
+		boarding_locations.add(routes.getBoardingLocation1());
+		boarding_locations.add(routes.getBoardingLocation2());
+		boarding_locations.add(routes.getBoardingLocation3());
+		boarding_locations.add(routes.getBoardingLocation4());
+		boarding_locations.add(routes.getBoardingLocation5());
+		boarding_locations.add(routes.getBoardingLocation6());
+		boarding_locations.add(routes.getBoardingLocation7());
+		boarding_locations.add(routes.getBoardingLocation8());
+		boarding_locations.add(routes.getBoardingLocation9());
+		boarding_locations.add(routes.getBoardingLocation10());
+		routes.setBoradingLocations(boarding_locations);
 		
-	     
-		}
+		routes.setLocation(routes.getLocationName());
+		routes.setCapacity(routes.getBusCapacity());
+		routes.setUpdatedCapacity(routes.getBusCapacity());
+		routes.setRouteNo(routes.getRouteNumber());
+		return new ResponseEntity<Routes>(routesRepository.save(routes), HttpStatus.OK);
 
-	 @SuppressWarnings({ "rawtypes", "unchecked" })
-		@RequestMapping(path = "/routes/{locationName}/{routeNumber}", method = RequestMethod.GET, consumes = {
-					MediaType.APPLICATION_JSON_VALUE }, produces = "application/json")
-			public ResponseEntity getRoutes(@PathVariable(value = "locationName") String locationName,@PathVariable(value = "routeNumber") String routeNumber) throws JsonProcessingException {
-				return new ResponseEntity(routesRepository.getDetailsByLocationNameAndRouteNumber(locationName, routeNumber), HttpStatus.OK);
-			
-		     
-			}
+	}
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@RequestMapping(path = "/routes/{locationName}", method = RequestMethod.GET, consumes = {
+			MediaType.APPLICATION_JSON_VALUE }, produces = "application/json")
+	public ResponseEntity getRoutes(@PathVariable(value = "locationName") String locationName)
+			throws JsonProcessingException {
+		return new ResponseEntity(routesRepository.getRoutesByLocationName(locationName), HttpStatus.OK);
+
+	}
+
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@RequestMapping(path = "/routes/{locationName}/{routeNumber}", method = RequestMethod.GET, consumes = {
+			MediaType.APPLICATION_JSON_VALUE }, produces = "application/json")
+	public ResponseEntity getRoutes(@PathVariable(value = "locationName") String locationName,
+			@PathVariable(value = "routeNumber") String routeNumber) throws JsonProcessingException {
+		return new ResponseEntity(routesRepository.getDetailsByLocationNameAndRouteNumber(locationName, routeNumber),
+				HttpStatus.OK);
+
+	}
+
+	@RequestMapping(path = "/busRegistration/{location}/{routeNo}", method = RequestMethod.POST, consumes = {
+				MediaType.APPLICATION_JSON_VALUE }, produces = "application/json")
+	 @ResponseStatus(HttpStatus.OK)
+	public String submitRegistration(@Valid @RequestBody Routes routes,@PathVariable(value = "location") String location,@PathVariable(value = "routeNo") String routeNo) {
+	
+	  String capacity= routesRepository.getDetailsByLocationNameAndRouteNumber(location, routeNo).getUpdatedCapacity();
+	  int updateCap=Integer.valueOf(capacity)-1;
+      routes.setUpdatedCapacity(String.valueOf(updateCap));
+      
+      routesRepository.updateAvailableCapacityByLocationAndRoute(routes.getUpdatedCapacity(), location, routeNo);
+	 
+	   return routes.getUpdatedCapacity();
+	}
+         
 }

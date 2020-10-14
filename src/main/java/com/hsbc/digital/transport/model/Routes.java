@@ -25,7 +25,8 @@ import io.swagger.annotations.ApiModelProperty;
 @Table(name="routes")
 @SecondaryTables({
 	@SecondaryTable(name="boarding_locations" ,pkJoinColumns=@PrimaryKeyJoinColumn(name="routes_id")),
-	@SecondaryTable(name="drop_locations" ,pkJoinColumns=@PrimaryKeyJoinColumn(name="routes_id"))
+	@SecondaryTable(name="drop_locations" ,pkJoinColumns=@PrimaryKeyJoinColumn(name="routes_id")),
+	@SecondaryTable(name="route_registration",pkJoinColumns=@PrimaryKeyJoinColumn(name="routes_id"))
 })
 
 public class Routes {
@@ -482,7 +483,73 @@ public class Routes {
 		this.boardingLocation10 = boardingLocation10;
 	}
 
+/////////////////////////////////////////////////
+	@JsonIgnore
+	@JsonProperty(access=Access.WRITE_ONLY)
+	@ApiModelProperty(example="location")
+	@Column(length=10,table="route_registration")
+	private String location;
+	
+	
+	
+	@JsonIgnore
+	@JsonProperty(access=Access.WRITE_ONLY)
+	@ApiModelProperty(example="location")
+	@Column(length=10,table="route_registration")
+	private String routeNo;
+	
+	
+	@JsonIgnore
+	@JsonProperty(access=Access.WRITE_ONLY)
+	@ApiModelProperty(example="location")
+	@Column(length=10,table="route_registration")
+	private String capacity;
+	
+	@JsonIgnore
+	@JsonProperty(access=Access.WRITE_ONLY)
+	@ApiModelProperty(example="location")
+	@Column(length=10,table="route_registration")
+	private String updatedCapacity;
+	
+	@JsonIgnore
+	public String getLocation() {
+		return location;
+	}
+
+
+	public void setLocation(String location) {
+		this.location = location;
+	}
+
+	@JsonIgnore
+	public String getRouteNo() {
+		return routeNo;
+	}
 
 	
+	public void setRouteNo(String routeNo) {
+		this.routeNo = routeNo;
+	}
+
+	@JsonIgnore
+	public String getCapacity() {
+		return capacity;
+	}
+
+
+	public void setCapacity(String capacity) {
+		this.capacity = capacity;
+	}
+
+	@JsonIgnore
+	public String getUpdatedCapacity() {
+		return updatedCapacity;
+	}
+
+
+	public void setUpdatedCapacity(String updatedCapacity) {
+		this.updatedCapacity = updatedCapacity;
+	}
+
 	
 }
