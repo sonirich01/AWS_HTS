@@ -1,6 +1,7 @@
 package com.hsbc.digital.transport.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -256,15 +257,17 @@ public class UserAccountController {
 	@RequestMapping(path = "/busRegistration/{location}/{routeNo}", method = RequestMethod.POST, consumes = {
 				MediaType.APPLICATION_JSON_VALUE }, produces = "application/json")
 	 @ResponseStatus(HttpStatus.OK)
-	public String submitRegistration(@Valid @RequestBody Routes routes,@PathVariable(value = "location") String location,@PathVariable(value = "routeNo") String routeNo) {
+	public HashMap<String,String> submitRegistration(@Valid @RequestBody Routes routes,@PathVariable(value = "location") String location,@PathVariable(value = "routeNo") String routeNo) {
 	
 	  String capacity= routesRepository.getDetailsByLocationNameAndRouteNumber(location, routeNo).getUpdatedCapacity();
 	  int updateCap=Integer.valueOf(capacity)-1;
       routes.setUpdatedCapacity(String.valueOf(updateCap));
       
       routesRepository.updateAvailableCapacityByLocationAndRoute(routes.getUpdatedCapacity(), location, routeNo);
-	 
-	   return routes.getUpdatedCapacity();
+      HashMap<String,String> map=new HashMap<String, String>();
+      map.put("updatedCapacity", routes.getUpdatedCapacity());
+      
+	   return map;
 	}
          
 }
