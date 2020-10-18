@@ -168,13 +168,13 @@ public class UserAccountController {
 			MediaType.APPLICATION_JSON_VALUE }, produces = "application/json")
 	public ResponseEntity<Location> postLocation(@Valid @RequestBody Location location) throws JsonProcessingException {
 
-		ArrayList<String> buildings = new ArrayList<String>();
-		buildings.add(location.getBuilding1());
-		buildings.add(location.getBuilding2());
-		buildings.add(location.getBuilding3());
-		buildings.add(location.getBuilding4());
-
-		location.setBuildings(buildings);
+//		HashMap<String,String> buildings = new HashMap<String, String>();
+//		buildings.put("building1",location.getBuilding1());
+//		buildings.put("building2",location.getBuilding2());
+//		buildings.put("building3",location.getBuilding3());
+//		buildings.put("building4",location.getBuilding4());
+//
+//		location.setBuildings(buildings);
 		return new ResponseEntity<Location>(locationRepository.save(location), HttpStatus.OK);
 
 	}
