@@ -52,22 +52,22 @@ import io.swagger.annotations.ApiModelProperty;
 	
 	
 		@ApiModelProperty(example="Building1")
-		@Column(length=10,table="building")
+		@Column(length=100,table="building")
 		private String building1;
 	
 		
 		@ApiModelProperty(example="Building2")
-		@Column(length=10,table="building")
+		@Column(length=100,table="building")
 		private String building2;
 		
 		
 		@ApiModelProperty(example="Building3")
-		@Column(length=10,table="building")
+		@Column(length=100,table="building")
 		private String building3;
 		
 
 		@ApiModelProperty(example="Building4")
-		@Column(length=10,table="")
+		@Column(length=100,table="building")
 		private String building4;
 		
 		
